@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jboscloud.iml" filepath="$PROJECT_DIR$/jboscloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jboscloud-config/jboscloud-config.iml" filepath="$PROJECT_DIR$/jboscloud-config/jboscloud-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jboscloud-openapi/jboscloud-openapi.iml" filepath="$PROJECT_DIR$/jboscloud-openapi/jboscloud-openapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jboscloud-server/jboscloud-server.iml" filepath="$PROJECT_DIR$/jboscloud-server/jboscloud-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jboscloud-support/jboscloud-support.iml" filepath="$PROJECT_DIR$/jboscloud-support/jboscloud-support.iml" />
+    </modules>
+  </component>
+</project>

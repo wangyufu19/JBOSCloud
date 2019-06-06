@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-server/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-app/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-client/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-api/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-openapi/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-support/pom.xml" />
+        <option value="$PROJECT_DIR$/jboscloud-config/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
