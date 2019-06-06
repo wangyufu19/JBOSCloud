@@ -2,5 +2,5 @@ server:
   port: 7080
 spring:
   application:
-    name: config
+    name: configserver
 
