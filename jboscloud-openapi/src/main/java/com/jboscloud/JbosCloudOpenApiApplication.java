@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
 import com.jboscloud.openapi.filter.GatewayFilter;
+import org.springframework.context.annotation.Primary;
 
 @SpringBootApplication
 @EnableZuulProxy
@@ -19,6 +20,7 @@ public class JbosCloudOpenApiApplication {
 	@Bean
 	@RefreshScope
 	@ConfigurationProperties("zuul")
+	@Primary
 	public ZuulProperties zuulProperties(){
 		return new ZuulProperties();
 	}
