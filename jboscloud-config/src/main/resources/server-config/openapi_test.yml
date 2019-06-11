@@ -1,0 +1,16 @@
+server:
+  port: 9080
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/
+zuul:
+  add-host-header: false
+  routes:
+    support:
+      path: /openapi/support/**
+      serviceId: support
+spring:
+  application:
+    name: openapi
+
