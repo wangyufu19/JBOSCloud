@@ -17,13 +17,13 @@ public class JbosCloudOpenApiApplication {
 	public GatewayFilter gatewayFilter(){
 		return new GatewayFilter();
 	}
-	@Bean
-	@RefreshScope
-	@ConfigurationProperties("zuul")
-	@Primary
-	public ZuulProperties zuulProperties(){
-		return new ZuulProperties();
-	}
+//	@Bean
+//	@RefreshScope
+//	@ConfigurationProperties("zuul")
+//	@Primary
+//	public ZuulProperties zuulProperties(){
+//		return new ZuulProperties();
+//	}
 	public static void main(String[] args) {
 		SpringApplication.run(JbosCloudOpenApiApplication.class, args);
 	}
