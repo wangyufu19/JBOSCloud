@@ -7,7 +7,7 @@
 		<artifactId>jboscloud</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.jboscloud</groupId>
+	<groupId>com.jboscloud.config</groupId>
 	<artifactId>jboscloud-config</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
@@ -29,7 +29,14 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
-
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-starter-bus-kafka</artifactId>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

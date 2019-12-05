@@ -7,7 +7,7 @@
 		<artifactId>jboscloud</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.jboscloud</groupId>
+	<groupId>com.jboscloud.server</groupId>
 	<artifactId>jboscloud-server</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>

@@ -1,5 +1,8 @@
 spring:
+  application:
+    name: registryserver
   profiles:
     active: peer1
+
 
 

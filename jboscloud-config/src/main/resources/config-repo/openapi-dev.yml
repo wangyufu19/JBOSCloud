@@ -1,3 +1,5 @@
+server:
+  port: 9081
 eureka:
   client:
     service-url:
@@ -8,3 +10,4 @@ zuul:
     support:
       path: /openapi/support/**
       serviceId: support
+

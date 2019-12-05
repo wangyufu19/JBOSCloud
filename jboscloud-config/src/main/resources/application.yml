@@ -3,12 +3,25 @@ server:
 spring:
   application:
     name: configserver
+  profiles:
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/wangyufu19/JBOSCloud/
-          search-paths: jboscloud-config/src/main/resources/server-config
-          username: youfu.wang@gmail.com
-          password: wangyf19
+        bootstrap: true
+        native:
+         search_locations: D:/eclipse-workspace/jboscloud/jboscloud-config/src/main/resources/config-repo
+#  kafka:
+#    bootstrap-servers: 192.168.56.130:9092
+#    producer:
+#      retries: 0
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      group-id: springCloudBus-consumer-group
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true
+#      auto-commit-interval: 100
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
