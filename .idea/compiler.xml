@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="jboscloud-config" />
         <module name="jboscloud-openapi" />
-        <module name="jboscloud-server" />
         <module name="jboscloud-support" />
+        <module name="jboscloud-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,5 +19,13 @@
       <module name="jboscloud-server" target="1.8" />
       <module name="jboscloud-support" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jboscloud-config" options="-parameters" />
+      <module name="jboscloud-openapi" options="-parameters" />
+      <module name="jboscloud-server" options="-parameters" />
+      <module name="jboscloud-support" options="-parameters" />
+    </option>
   </component>
 </project>

@@ -3,8 +3,12 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jboscloud-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jboscloud-config/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jboscloud-openapi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jboscloud-openapi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jboscloud-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jboscloud-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jboscloud-support" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jboscloud-support/src/main/java" charset="UTF-8" />
   </component>
 </project>
