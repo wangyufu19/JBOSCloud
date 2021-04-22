@@ -1,11 +1,16 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://localhost:3306/jbos?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
-      username: jbos
-      password: jbos
+      default:
+        url: jdbc:mysql://localhost:3306/jbos?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+        username: jbos
+        password: jbos
+      activiti:
+        url: jdbc:mysql://localhost:3306/activiti?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        username: activiti
+        password: activiti
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -14,9 +19,9 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-      #validation-query: SELECT 1 FROM DUAL
+      validation-query: SELECT 1 FROM DUAL
       test-while-idle: true
-      test-on-borrow: false
+      test-on-borrow: true
       test-on-return: false
       stat-view-servlet:
         enabled: true
@@ -31,3 +36,10 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+      #使用非公平锁
+      useUnfairLock: true
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      logAbandoned: false
+      validationQueryTimeout: 1
+      keepAlive: true
