@@ -3,12 +3,15 @@ server:
 eureka:
   instance:
     hostname: peer2
+    preferIpAddress: false
   server:
     peer-node-read-timeout-ms: 500
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    #是否注册到自身服务端，默认为true，高可用需要注册到本身
+    register-with-eureka: true
+    #是否从服务器拉取注册信息，默认为true
+    fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://peer1:8761/eureka/
 
 
