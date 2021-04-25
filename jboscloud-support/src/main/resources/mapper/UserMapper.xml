@@ -3,10 +3,12 @@
 <mapper namespace="com.jboscloud.producer.mapper.UserMapper">
 
     <select id="auth" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT ID,LOGIN_NAME as loginName,LOGIN_PWD AS PASSWORD,USER_NAME as username,SALT FROM JBOS_T_USER A WHERE A.LOGIN_NAME=#{username}
+        SELECT ID,LOGINNAME as loginName,PASSWORD,USERNAME as username,SALT
+        FROM JBOS_USER_AUTH A WHERE A.LOGINNAME=#{username}
     </select>
 
     <select id="getUserObject" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT ID,LOGIN_NAME as loginName,LOGIN_PWD AS PASSWORD,USER_NAME as username,SALT FROM JBOS_T_USER A WHERE A.LOGIN_NAME=#{username}
+        SELECT ID,LOGINNAME as loginName,PASSWORD,USERNAME as username,SALT
+        FROM JBOS_USER_AUTH A WHERE A.LOGINNAME=#{username}
     </select>
 </mapper>

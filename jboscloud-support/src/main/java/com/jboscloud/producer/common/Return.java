@@ -11,19 +11,19 @@ public class Return extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 	
 	public Return() {
-		put("retCode", 0);
+		put("retCode", "0000");
 		put("retMsg", "success");
 	}
 	
 	public static Return error() {
-		return error(500, "未知异常，请联系管理员");
+		return error("500", "未知异常，请联系管理员");
 	}
 	
 	public static Return error(String retMsg) {
-		return error(500, retMsg);
+		return error("500", retMsg);
 	}
 	
-	public static Return error(int retCode, String retMsg) {
+	public static Return error(String retCode, String retMsg) {
 		Return r = new Return();
 		r.put("retCode", retCode);
 		r.put("retMsg", retMsg);

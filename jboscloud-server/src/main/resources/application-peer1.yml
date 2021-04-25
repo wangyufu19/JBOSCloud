@@ -5,11 +5,10 @@ eureka:
     hostname: peer1
   server:
     peer-node-read-timeout-ms: 500
+    enable-self-preservation: false #关闭保护机制， 以确保注册中心可以将不可用的实例正确剔除
   client:
-    #是否注册到自身服务端，默认为true，高可用需要注册到本身
-    register-with-eureka: true
-    #是否从服务器拉取注册信息，默认为true
-    fetch-registry: true
+    register-with-eureka: true  #是否注册到自身服务端，默认为true，高可用需要注册到本身
+    fetch-registry: true #是否从服务器拉取注册信息，默认为true
     service-url:
       defaultZone: http://peer2:8762/eureka/
 

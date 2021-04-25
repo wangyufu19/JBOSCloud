@@ -7,9 +7,8 @@ eureka:
   server:
     peer-node-read-timeout-ms: 500
   client:
-    #是否注册到自身服务端，默认为true，高可用需要注册到本身
-    register-with-eureka: true
-    #是否从服务器拉取注册信息，默认为true
+    register-with-eureka: true  #是否注册到自身服务端，默认为true，高可用需要注册到本身
+    fetch-registry: true #是否从服务器拉取注册信息，默认为true
     fetch-registry: true
     service-url:
       defaultZone: http://peer1:8761/eureka/
