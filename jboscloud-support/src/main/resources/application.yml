@@ -12,6 +12,10 @@ spring:
     name: support
   profiles:
     active: dev
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
 #mybatis
 mybatis-plus:
   mapperLocations: classpath*:mapper/*.xml
