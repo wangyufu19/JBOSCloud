@@ -19,6 +19,8 @@
         <module>jboscloud-support</module>
         <module>jboscloud-openapi</module>
         <module>jboscloud-config</module>
+        <module>jboscloud-consumer</module>
+        <module>jboscloud-common</module>
     </modules>
 
     <properties>
