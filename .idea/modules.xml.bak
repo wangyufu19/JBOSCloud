@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-	   <module fileurl="file://$PROJECT_DIR$/jboscloud.iml" filepath="$PROJECT_DIR$/jboscloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/jboscloud-common/jboscloud-common.iml" filepath="$PROJECT_DIR$/jboscloud-common/jboscloud-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jboscloud-config/jboscloud-config.iml" filepath="$PROJECT_DIR$/jboscloud-config/jboscloud-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/jboscloud-consumer/jboscloud-consumer.iml" filepath="$PROJECT_DIR$/jboscloud-consumer/jboscloud-consumer.iml" />

@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="jboscloud-config" />
-        <module name="jboscloud-openapi" />
-        <module name="jboscloud-support" />
-        <module name="jboscloud-server" />
-      </profile>
-    </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jboscloud" target="1.8" />
-      <module name="jboscloud-config" target="1.8" />
-      <module name="jboscloud-openapi" target="1.8" />
-      <module name="jboscloud-server" target="1.8" />
-      <module name="jboscloud-support" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="jboscloud-common" options="-parameters" />
       <module name="jboscloud-config" options="-parameters" />
+      <module name="jboscloud-consumer" options="-parameters" />
       <module name="jboscloud-openapi" options="-parameters" />
       <module name="jboscloud-server" options="-parameters" />
       <module name="jboscloud-support" options="-parameters" />
