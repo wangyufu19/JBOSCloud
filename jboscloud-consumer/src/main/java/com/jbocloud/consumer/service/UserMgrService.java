@@ -1,19 +1,16 @@
 package com.jbocloud.consumer.service;
 
+import com.jboscloud.openapi.request.UserMgrRequest;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Map;
-
+/**
+ * UserMgrService
+ * @author youfu.wang
+ * @date 2021-04-29
+ */
 @FeignClient("support")
-public interface UserMgrService {
+public interface UserMgrService extends UserMgrRequest {
 
-    @RequestMapping("/getUserInfo")
-    public Map<String, Object> getUserInfo(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String desc);
+
 }
 
 

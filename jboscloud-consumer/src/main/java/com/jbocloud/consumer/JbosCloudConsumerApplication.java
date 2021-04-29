@@ -17,9 +17,10 @@ import org.springframework.web.client.RestTemplate;
 public class JbosCloudConsumerApplication {
     @Bean
     @LoadBalanced
-    public RestTemplate restTemplate () {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(JbosCloudConsumerApplication.class, args);
     }
