@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 
-@Service
+//@Service
 public class UserMgrServiceImpl {
     @Autowired
     private RestTemplate restTemplate;

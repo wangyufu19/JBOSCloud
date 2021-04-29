@@ -32,12 +32,6 @@
             <artifactId>hystrix-javanica</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jboscloud.openapi</groupId>
-            <artifactId>jboscloud-openapi</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.jboscloud.common</groupId>
             <artifactId>jboscloud-common</artifactId>
             <version>1.0.0</version>
