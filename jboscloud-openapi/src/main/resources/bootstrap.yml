@@ -1,3 +1,10 @@
+spring:
+  application:
+    name: openapi
+  cloud:
+    config:
+      profile: dev
+      uri: http://localhost:7080/
 server:
   port: 9090
 eureka:
@@ -10,12 +17,30 @@ zuul:
     support:
       path: /openapi/support/**
       serviceId: support
-spring:
-  application:
-    name: openapi
-  cloud:
-    config:
-      profile: dev
-      uri: http://localhost:7080/
-
+ribbon:
+  http:
+    client:
+      enabled: false
+  okhttp:
+    enabled: true
+  #com.netflix.loadbalancer.RandomRule #配置规则 随机
+  #com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询
+  #com.netflix.loadbalancer.RetryRule #配置规则 重试
+  #com.netflix.loadbalancer.WeightedResponseTimeRule #配置规则 响应时间权重
+  #com.netflix.loadbalancer.BestAvailableRule #配置规则 最空闲连接策略
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询
+  ConnectTimeout: 500 #请求连接超时时间
+  ReadTimeout: 1000 #请求处理的超时时间
+  OkToRetryOnAllOperations: true #对所有请求都进行重试
+  MaxAutoRetriesNextServer: 2 #切换实例的重试次数
+  MaxAutoRetries: 1 #对当前实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+      isolation:
+        thread:
+          timeoutInMilliseconds: 5000
 

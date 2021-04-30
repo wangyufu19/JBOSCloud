@@ -44,14 +44,14 @@ public class HttpAccessFilter extends ZuulFilter{
             HttpServletRequest request = ctx.getRequest();
             HttpServletResponse response = ctx.getResponse();
             log.info("send {} request to {}", request.getMethod(),request.getRequestURL().toString());
-            Object accessToken = request.getParameter("accessToken");
-            if(accessToken == null) {
-                log.warn("access token is empty");
-                ctx.setSendZuulResponse(false);
-                HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
-                httpAccessResponse.doResponseBody(Return.error());
-                return null;
-            }
+//            Object accessToken = request.getParameter("accessToken");
+//            if(accessToken == null) {
+//                log.warn("access token is empty");
+//                ctx.setSendZuulResponse(false);
+//                HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
+//                httpAccessResponse.doResponseBody(Return.error());
+//                return null;
+//            }
         }catch (Exception e){
             log.error("Gateway Filter Exception");
             ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
