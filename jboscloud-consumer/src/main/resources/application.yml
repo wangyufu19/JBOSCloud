@@ -40,3 +40,10 @@ feign:
     enabled: false
   okhttp:
     enabled: true
+  #开启请求与响应的压缩
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+

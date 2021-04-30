@@ -1,21 +1,17 @@
 package com.jboscloud;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
-import com.jboscloud.openapi.filter.GatewayFilter;
-import org.springframework.context.annotation.Primary;
+import com.jboscloud.openapi.filter.HttpAccessFilter;
 
 @SpringBootApplication
 @EnableZuulProxy
 public class JbosCloudOpenApiApplication {
 
 	@Bean
-	public GatewayFilter gatewayFilter(){
-		return new GatewayFilter();
+	public HttpAccessFilter getHttpAccessFilter(){
+		return new HttpAccessFilter();
 	}
 //	@Bean
 //	@RefreshScope
