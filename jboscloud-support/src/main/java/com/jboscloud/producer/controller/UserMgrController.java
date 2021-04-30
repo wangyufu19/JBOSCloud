@@ -1,5 +1,5 @@
 package com.jboscloud.producer.controller;
-import com.jboscloud.producer.common.Return;
+import com.jboscloud.common.Return;
 import com.jboscloud.producer.service.UserMgrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

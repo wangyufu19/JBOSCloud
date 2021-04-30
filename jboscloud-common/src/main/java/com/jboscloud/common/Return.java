@@ -18,7 +18,7 @@ public class Return extends HashMap<String, Object> {
 	}
 	
 	public static Return error() {
-		return error(Return.RETCODE_FAILURE, "未知异常，请联系管理员");
+		return error(Return.RETCODE_FAILURE, "未知异常!");
 	}
 	
 	public static Return error(String retMsg) {
