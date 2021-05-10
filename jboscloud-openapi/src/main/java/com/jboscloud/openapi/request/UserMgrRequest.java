@@ -14,7 +14,5 @@ import java.util.Map;
 public interface UserMgrRequest {
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     public Map<String, Object> getUserInfo(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String desc);
+            @RequestParam String username);
 }
