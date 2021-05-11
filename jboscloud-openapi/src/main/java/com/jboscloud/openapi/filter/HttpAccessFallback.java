@@ -1,5 +1,7 @@
 package com.jboscloud.openapi.filter;
 
+import com.google.gson.Gson;
+import com.jboscloud.openapi.response.Return;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,10 @@ public class HttpAccessFallback implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream((route+"服务不可用！").getBytes());
+                Gson gson=new Gson();
+                Return ret=Return.error("服务不可用");
+                ret.put("serviceId",route);
+                return new ByteArrayInputStream(gson.toJson(ret).getBytes());
             }
 
             @Override

@@ -1,8 +1,6 @@
 package com.jboscloud.openapi.response;
 
 import com.google.gson.Gson;
-import com.jboscloud.common.Return;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

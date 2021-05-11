@@ -1,10 +1,9 @@
 package com.jboscloud.openapi.filter;
 
-import com.jboscloud.common.Return;
 import com.jboscloud.openapi.response.HttpAccessResponse;
+import com.jboscloud.openapi.response.Return;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
@@ -44,14 +43,14 @@ public class HttpAccessFilter extends ZuulFilter{
             HttpServletRequest request = ctx.getRequest();
             HttpServletResponse response = ctx.getResponse();
             log.info("send {} request to {}", request.getMethod(),request.getRequestURL().toString());
-//            Object accessToken = request.getParameter("accessToken");
-//            if(accessToken == null) {
-//                log.warn("access token is empty");
-//                ctx.setSendZuulResponse(false);
-//                HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
-//                httpAccessResponse.doResponseBody(Return.error());
-//                return null;
-//            }
+            Object accessToken = request.getParameter("accessToken");
+            if(accessToken == null) {
+                log.warn("access token is empty");
+                ctx.setSendZuulResponse(false);
+                HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
+                httpAccessResponse.doResponseBody(Return.error("access token is empty"));
+                return null;
+            }
         }catch (Exception e){
             log.error("Gateway Filter Exception");
             ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
