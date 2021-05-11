@@ -11,12 +11,12 @@ eureka:
   client:
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
-zuul:
-  add-host-header: false
-  routes:
-    support:
-      path: /openapi/support/**
-      serviceId: support
+#zuul:
+#  add-host-header: false
+#  routes:
+#    support:
+#      path: /openapi/support/**
+#      serviceId: support
 ribbon:
   http:
     client:

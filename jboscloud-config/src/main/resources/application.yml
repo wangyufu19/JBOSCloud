@@ -10,7 +10,7 @@ spring:
       server:
         bootstrap: true
         native:
-         search_locations: D:/eclipse-workspace/jboscloud/jboscloud-config/src/main/resources/config-repo
+         search_locations: classpath:/config-repo
 #  kafka:
 #    bootstrap-servers: 192.168.56.130:9092
 #    producer:

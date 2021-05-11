@@ -15,13 +15,7 @@ public class JbosCloudOpenApiApplication {
 	public HttpAccessFilter getHttpAccessFilter(){
 		return new HttpAccessFilter();
 	}
-//	@Bean
-//	@RefreshScope
-//	@ConfigurationProperties("zuul")
-//	@Primary
-//	public ZuulProperties zuulProperties(){
-//		return new ZuulProperties();
-//	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(JbosCloudOpenApiApplication.class, args);
 	}
