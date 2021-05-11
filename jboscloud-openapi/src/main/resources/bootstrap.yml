@@ -4,19 +4,23 @@ spring:
   cloud:
     config:
       profile: dev
-      uri: http://localhost:7080/
+      #服务发现和RUI模式得到配置中心属性
+      #uri: http://localhost:7080/
+      discovery:
+        enabled: true
+        service-id: configserver
 server:
   port: 9090
 eureka:
   client:
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
-#zuul:
-#  add-host-header: false
-#  routes:
-#    support:
-#      path: /openapi/support/**
-#      serviceId: support
+zuul:
+  add-host-header: false
+  routes:
+    support:
+      path: /openapi/support/**
+      serviceId: support
 ribbon:
   http:
     client:

@@ -11,6 +11,10 @@ spring:
         bootstrap: true
         native:
          search_locations: classpath:/config-repo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
 #  kafka:
 #    bootstrap-servers: 192.168.56.130:9092
 #    producer:
