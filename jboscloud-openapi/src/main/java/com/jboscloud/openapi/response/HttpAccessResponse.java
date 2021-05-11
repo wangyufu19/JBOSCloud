@@ -1,6 +1,8 @@
 package com.jboscloud.openapi.response;
 
 import com.google.gson.Gson;
+import com.jboscloud.openapi.Charset;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.jboscloud.openapi.filter.processor;
+package com.jboscloud.openapi.request;
 
 import com.jboscloud.openapi.response.HttpAccessResponse;
 import com.jboscloud.openapi.response.Return;
@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author youfu.wang
  * @date 2021-05-05
  */
-public class TokenAuthProcessor extends OpenApiProcessor {
-    private static final Logger log= LoggerFactory.getLogger(TokenAuthProcessor.class);
+public class TokenAuthRequest extends OpenApiRequest {
+    private static final Logger log= LoggerFactory.getLogger(TokenAuthRequest.class);
     private  RequestContext ctx;
 
-    public TokenAuthProcessor(RequestContext ctx){
+    public TokenAuthRequest(RequestContext ctx){
         this.ctx=ctx;
     }
 
-    public void doProcess() {
+    public Object doRequest () {
         try{
             HttpServletRequest request = ctx.getRequest();
             HttpServletResponse response = ctx.getResponse();
@@ -32,12 +32,12 @@ public class TokenAuthProcessor extends OpenApiProcessor {
                 ctx.setSendZuulResponse(false);
                 HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
                 httpAccessResponse.doResponseBody(Return.error("access token is empty"));
-                return;
             }
         }catch (Exception e){
             log.error("Gateway Filter Exception");
             ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             ctx.set("error.retMsg",e);
         }
+        return null;
     }
 }

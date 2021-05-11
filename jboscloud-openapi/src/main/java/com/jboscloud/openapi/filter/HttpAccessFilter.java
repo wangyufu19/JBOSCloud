@@ -1,6 +1,6 @@
 package com.jboscloud.openapi.filter;
-import com.jboscloud.openapi.filter.processor.OpenApiProcessor;
-import com.jboscloud.openapi.filter.processor.TokenAuthProcessor;
+import com.jboscloud.openapi.request.OpenApiRequest;
+import com.jboscloud.openapi.request.TokenAuthRequest;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
@@ -38,8 +38,8 @@ public class HttpAccessFilter extends ZuulFilter{
     public Object run() {
         RequestContext ctx=RequestContext.getCurrentContext();
         try{
-            OpenApiProcessor openApiProcessor=new TokenAuthProcessor(ctx);
-            openApiProcessor.doProcess();
+            OpenApiRequest openApiRequest=new TokenAuthRequest(ctx);
+            return openApiRequest.doRequest();
         }catch (Exception e){
             log.error("Gateway Filter Exception");
             ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -47,4 +47,5 @@ public class HttpAccessFilter extends ZuulFilter{
         }
         return null;
     }
+
 }
