@@ -4,7 +4,7 @@ spring:
   cloud:
     config:
       profile: dev
-      #服务发现和RUI模式得到配置中心属性
+      #服务发现和URI模式得到配置中心属性
       #uri: http://localhost:7080/
       discovery:
         enabled: true
