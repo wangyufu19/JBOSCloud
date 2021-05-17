@@ -15,7 +15,7 @@
 	<description>Jboscloud-support for Spring Boot</description>
 
 	<properties>
-		<druid.version>1.1.10</druid.version>
+		<druid.version>1.1.20</druid.version>
 		<mysql.version>8.0.11</mysql.version>
 		<mybatis.version>2.0.0</mybatis.version>
 		<pagehelper.version>1.2.3</pagehelper.version>
@@ -63,12 +63,11 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>${pagehelper.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>com.jboscloud.common</groupId>
-            <artifactId>jboscloud-common</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.jboscloud.common</groupId>
+			<artifactId>jboscloud-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
     </dependencies>
 
