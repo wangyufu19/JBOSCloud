@@ -1,6 +1,8 @@
 spring:
   application:
     name: openapi
+  profiles:
+    active: dev
   cloud:
     config:
       profile: dev

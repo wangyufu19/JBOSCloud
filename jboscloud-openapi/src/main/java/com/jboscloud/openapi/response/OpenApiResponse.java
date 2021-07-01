@@ -13,7 +13,7 @@ import java.io.PrintWriter;
  * @author youfu.wang
  * @date 2021-04-30
  */
-public class HttpAccessResponse {
+public class OpenApiResponse {
     public static final String APPLICATION_TEXT_HTML = "text/html";
     public static final String APPLICATION_XML = "application/xml";
     public static final String APPLICATION_JSON = "application/json ";
@@ -31,10 +31,10 @@ public class HttpAccessResponse {
      * @param request
      * @param response
      */
-    public HttpAccessResponse(HttpServletRequest request, HttpServletResponse response) {
+    public OpenApiResponse(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        this.contentType = HttpAccessResponse.APPLICATION_JSON;
+        this.contentType = OpenApiResponse.APPLICATION_JSON;
         this.charset = Charset.UTF8;
     }
 

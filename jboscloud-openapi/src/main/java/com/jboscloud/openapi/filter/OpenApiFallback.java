@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 @Component
-public class HttpAccessFallback implements FallbackProvider {
+public class OpenApiFallback implements FallbackProvider {
     @Override
     public String getRoute() {
         return "*";

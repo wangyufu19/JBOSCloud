@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author youfu.wang
  * @date 2021-05-05
  */
-public class HttpAccessFilter extends ZuulFilter{
-    private static final Logger log= LoggerFactory.getLogger(HttpAccessFilter.class);
+public class OpenApiFilter extends ZuulFilter{
+    private static final Logger log= LoggerFactory.getLogger(OpenApiFilter.class);
     public static final String APPLICATION_TEXT_HTML="text/html";
     public static final String APPLICATION_XML="application/xml";
     public static final String APPLICATION_JSON="application/json ";

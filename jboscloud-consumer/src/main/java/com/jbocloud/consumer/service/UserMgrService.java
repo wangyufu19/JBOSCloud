@@ -13,7 +13,7 @@ import java.util.Map;
  * @author youfu.wang
  * @date 2021-04-29
  */
-@FeignClient(name = "support" ,fallback = UserMgrServiceFallback.class)
+@FeignClient(name = "support" , fallback = UserMgrServiceFallback.class)
 public interface UserMgrService {
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     public Map<String, Object> getUserInfo(

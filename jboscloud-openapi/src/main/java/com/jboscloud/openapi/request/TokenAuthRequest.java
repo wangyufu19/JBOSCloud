@@ -1,6 +1,6 @@
 package com.jboscloud.openapi.request;
 
-import com.jboscloud.openapi.response.HttpAccessResponse;
+import com.jboscloud.openapi.response.OpenApiResponse;
 import com.jboscloud.openapi.response.Return;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class TokenAuthRequest extends OpenApiRequest {
             if(accessToken == null) {
                 log.warn("access token is empty");
                 ctx.setSendZuulResponse(false);
-                HttpAccessResponse httpAccessResponse=new HttpAccessResponse(request,response);
+                OpenApiResponse httpAccessResponse=new OpenApiResponse(request,response);
                 httpAccessResponse.doResponseBody(Return.error("access token is empty"));
             }
         }catch (Exception e){

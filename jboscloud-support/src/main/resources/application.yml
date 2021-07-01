@@ -6,7 +6,7 @@ eureka:
     lease-expiration-duration-in-seconds: 90 #定义服务失效的时间，默认为90秒
   client:
     service-url:
-      defaultZone: http://peer1:8761/eureka/
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
 spring:
   application:
     name: support
