@@ -24,10 +24,15 @@ public class OpenApiResponse {
     private String charset;
     private HttpServletRequest request;
     private HttpServletResponse response;
-
     /**
      * 构造方法
-     *
+     */
+    public OpenApiResponse() {
+        this.contentType = OpenApiResponse.APPLICATION_JSON;
+        this.charset = Charset.UTF8;
+    }
+    /**
+     * 构造方法
      * @param request
      * @param response
      */
@@ -46,9 +51,12 @@ public class OpenApiResponse {
         this.charset = charset;
     }
 
-    public void doResponseBody(Return ret) throws IOException {
+    public String getBody(Return ret){
         Gson gson = new Gson();
-        this.doResponseBody(gson.toJson(ret));
+        return gson.toJson(ret);
+    }
+    public void doResponseBody(Return ret) throws IOException {
+        this.doResponseBody(this.getBody(ret));
     }
 
     public void doResponseBody(String s) throws IOException {
@@ -56,5 +64,6 @@ public class OpenApiResponse {
         PrintWriter out = response.getWriter();
         out.write(s);
         out.flush();
+        out.close();
     }
 }

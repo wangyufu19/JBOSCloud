@@ -5,23 +5,21 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.stereotype.Component;
+
 import javax.servlet.http.HttpServletResponse;
 /**
- * HttpAccessFilter
+ * OpenApiPreFilter
  * @author youfu.wang
  * @date 2021-05-05
  */
-public class OpenApiFilter extends ZuulFilter{
-    private static final Logger log= LoggerFactory.getLogger(OpenApiFilter.class);
-    public static final String APPLICATION_TEXT_HTML="text/html";
-    public static final String APPLICATION_XML="application/xml";
-    public static final String APPLICATION_JSON="application/json ";
-    public static final String APPLICATION_IMAGE_GIF="image/gif";
-    public static final String APPLICATION_IMAGE_JPEG="image/jpeg";
-    public static final String APPLICATION_IMAGE_PNG="image/png";
+@Component
+public class OpenApiPreFilter extends ZuulFilter{
+    private static final Logger log= LoggerFactory.getLogger(OpenApiPreFilter.class);
     @Override
     public String filterType() {
-        return "pre";
+        return  FilterConstants.PRE_TYPE;
     }
 
     @Override
@@ -37,13 +35,15 @@ public class OpenApiFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext ctx=RequestContext.getCurrentContext();
+        int code= ctx.getResponseStatusCode();
+        int status=ctx.getResponse().getStatus();
         try{
             OpenApiRequest openApiRequest=new TokenAuthRequest(ctx);
             return openApiRequest.doRequest();
         }catch (Exception e){
             log.error("Gateway Filter Exception");
-            ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            ctx.set("error.retMsg",e);
+            ctx.set("error.status",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ctx.set("error.message",e);
         }
         return null;
     }

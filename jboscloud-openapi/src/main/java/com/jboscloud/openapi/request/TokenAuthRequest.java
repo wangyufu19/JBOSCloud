@@ -26,17 +26,16 @@ public class TokenAuthRequest extends OpenApiRequest {
             HttpServletRequest request = ctx.getRequest();
             HttpServletResponse response = ctx.getResponse();
             log.info("send {} request to {}", request.getMethod(),request.getRequestURL().toString());
-            Object accessToken = request.getParameter("accessToken");
+            Object accessToken = request.getParameter("access_token");
             if(accessToken == null) {
                 log.warn("access token is empty");
                 ctx.setSendZuulResponse(false);
-                OpenApiResponse httpAccessResponse=new OpenApiResponse(request,response);
-                httpAccessResponse.doResponseBody(Return.error("access token is empty"));
+                OpenApiResponse openApiResponse=new OpenApiResponse();
+                ctx.setResponseBody(openApiResponse.getBody(Return.error("access token is empty")));
             }
         }catch (Exception e){
-            log.error("Gateway Filter Exception");
-            ctx.set("error.retCode",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            ctx.set("error.retMsg",e);
+            ctx.set("error.status",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ctx.set("error.message",e);
         }
         return null;
     }
