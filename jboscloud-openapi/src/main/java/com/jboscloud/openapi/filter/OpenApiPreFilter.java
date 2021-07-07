@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletResponse;
 /**
  * OpenApiPreFilter
@@ -35,8 +34,6 @@ public class OpenApiPreFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext ctx=RequestContext.getCurrentContext();
-        int code= ctx.getResponseStatusCode();
-        int status=ctx.getResponse().getStatus();
         try{
             OpenApiRequest openApiRequest=new TokenAuthRequest(ctx);
             return openApiRequest.doRequest();
