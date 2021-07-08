@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEn
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +79,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         authenticationEntryPoint.setExceptionTranslator(new ResourceServerExceptionTranslator());
         resources.authenticationEntryPoint(authenticationEntryPoint);
     }
-
+    @Service
     public class ResourceServerExceptionTranslator implements WebResponseExceptionTranslator {
         public ResponseEntity<Response> translate(Exception e) {
             if (e instanceof OAuth2Exception) {

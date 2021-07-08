@@ -1,9 +1,18 @@
 package com.jboscloud.common.config;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jboscloud.openapi.response.ResponseBody;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -12,11 +21,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * AuthorizationServerConfig
@@ -41,6 +57,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtAccessTokenConverter jwtAccessTokenConverter;
     @Autowired
     private DataSource dataSource;
+
     /**
      * 授权服务器安全配置：
      */
@@ -51,8 +68,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
          */
         security
                 .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .allowFormAuthenticationForClients();
+                .checkTokenAccess("isAuthenticated()");
+                //.allowFormAuthenticationForClients();
+        AuthorizationServerEndpointFilter endpointFilter = new AuthorizationServerEndpointFilter(security);
+        endpointFilter.afterPropertiesSet();
+        endpointFilter.setAuthenticationEntryPoint(new AuthorizationServerAuthenticationEntryPoint());
+        // 客户端认证之前的过滤器
+        security.addTokenEndpointAuthenticationFilter(endpointFilter);
+
     }
     //jdbc模式的ClientDetailsService 服务配置数据源处理client相关信息的存取
     @Bean
@@ -89,5 +112,57 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
          */
         endpoints.userDetailsService(userDetailsServiceImpl);
     }
+    public class AuthorizationServerEndpointFilter extends ClientCredentialsTokenEndpointFilter {
+        private final AuthorizationServerSecurityConfigurer configurer;
+        private AuthenticationEntryPoint authenticationEntryPoint;
+
+        public AuthorizationServerEndpointFilter(AuthorizationServerSecurityConfigurer configurer) {
+            this.configurer = configurer;
+        }
+
+
+        @Override
+        public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
+            this.authenticationEntryPoint = authenticationEntryPoint;
+        }
+
+        @Override
+        protected AuthenticationManager getAuthenticationManager() {
+            return configurer.and().getSharedObject(AuthenticationManager.class);
+        }
+
+        @Override
+        public void afterPropertiesSet() {
+            setAuthenticationFailureHandler((request, response, exception) -> authenticationEntryPoint.commence(request, response, exception));
+            setAuthenticationSuccessHandler((request, response, authentication) -> {
+                // no-op - just allow filter chain to continue to token endpoint
+            });
+        }
+    }
+    @Component
+    public class AuthorizationServerAuthenticationEntryPoint implements AuthenticationEntryPoint {
+        private final ObjectMapper objectMapper = new ObjectMapper();
+
+        @Override
+        public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+            response.setStatus(HttpStatus.OK.value());
+            ResponseBody responseBody= ResponseBody.error(401,authException.getMessage());
+            response.setContentType("application/json;charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.write(objectMapper.writeValueAsString(responseBody));
+            out.flush();
+            out.close();
+        }
+    }
+//
+//    @Component
+//    @Aspect
+//    public class AuthTokenAspect {
+//        @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
+//        public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
+//            Object obj=null;
+//            return obj;
+//        }
+//    }
 }
 
