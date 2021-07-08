@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * HttpAccessResponse
+ * ResponseDispatcher
  * @author youfu.wang
  * @date 2021-04-30
  */
-public class OpenApiResponse {
+public class ResponseDispatcher {
     public static final String APPLICATION_TEXT_HTML = "text/html";
     public static final String APPLICATION_XML = "application/xml";
     public static final String APPLICATION_JSON = "application/json ";
@@ -27,8 +27,8 @@ public class OpenApiResponse {
     /**
      * 构造方法
      */
-    public OpenApiResponse() {
-        this.contentType = OpenApiResponse.APPLICATION_JSON;
+    public ResponseDispatcher() {
+        this.contentType = ResponseDispatcher.APPLICATION_JSON;
         this.charset = Charset.UTF8;
     }
     /**
@@ -36,10 +36,10 @@ public class OpenApiResponse {
      * @param request
      * @param response
      */
-    public OpenApiResponse(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseDispatcher(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        this.contentType = OpenApiResponse.APPLICATION_JSON;
+        this.contentType = ResponseDispatcher.APPLICATION_JSON;
         this.charset = Charset.UTF8;
     }
 
@@ -51,12 +51,12 @@ public class OpenApiResponse {
         this.charset = charset;
     }
 
-    public String getBody(Return ret){
+    public String getBody(Response response){
         Gson gson = new Gson();
-        return gson.toJson(ret);
+        return gson.toJson(response);
     }
-    public void doResponseBody(Return ret) throws IOException {
-        this.doResponseBody(this.getBody(ret));
+    public void doResponseBody(Response response) throws IOException {
+        this.doResponseBody(this.getBody(response));
     }
 
     public void doResponseBody(String s) throws IOException {

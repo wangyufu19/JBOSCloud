@@ -1,6 +1,6 @@
 package com.jboscloud.openapi.filter;
-import com.jboscloud.openapi.response.OpenApiResponse;
-import com.jboscloud.openapi.response.Return;
+import com.jboscloud.openapi.response.ResponseBody;
+import com.jboscloud.openapi.response.ResponseDispatcher;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
@@ -40,9 +40,9 @@ public class OpenApiPostFilter extends ZuulFilter{
             if(HttpServletResponse.SC_NOT_FOUND==ctx.getResponseStatusCode()){
                 ctx.setSendZuulResponse(false);
                 ctx.setResponseStatusCode(HttpServletResponse.SC_NOT_FOUND);
-                OpenApiResponse openApiResponse=new OpenApiResponse();
-                Return ret=Return.error(String.valueOf(HttpServletResponse.SC_NOT_FOUND),ctx.getRequest().getRequestURI()+" is not found");
-                ctx.setResponseBody(openApiResponse.getBody(ret));
+                ResponseDispatcher openApiResponse=new ResponseDispatcher();
+                ResponseBody responseBody=ResponseBody.error(HttpServletResponse.SC_NOT_FOUND,ctx.getRequest().getRequestURI()+" is not found");
+                ctx.setResponseBody(openApiResponse.getBody(responseBody));
                 return null;
             }
         }catch (Exception e){
