@@ -15,7 +15,8 @@ import lombok.Setter;
 public class Response {
     public static final String SUCCESS_CODE="0000";
     public static final String FAILURE_CODE="9999";
-
+    public static final String SUCCESS_MESSAGE="成功";
+    public static final String FAILURE_MESSAGE="失败";
     private String retCode;
     private String retMsg;
 

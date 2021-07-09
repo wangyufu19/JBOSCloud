@@ -1,8 +1,9 @@
 package com.jboscloud.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jboscloud.common.utils.Return;
+import com.jboscloud.common.utils.JacksonUtils;
 import com.jboscloud.common.utils.StringUtils;
+import com.jboscloud.openapi.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -83,10 +84,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new AuthenticationEntryPoint(){
                     //未通过认证请求，返回异常信息
                     public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException {
-                        Return ret=Return.error(403,"对不起，非法请求");
+                        ResponseBody responseBody=ResponseBody.error(403,"对不起，非法请求");
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
-                        out.write(new ObjectMapper().writeValueAsString(ret));
+                        out.write(JacksonUtils.toJson(responseBody));
                         out.flush();
                         out.close();
                     }
@@ -113,11 +114,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 返回登录成功后数据
         loginFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler() {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-                Return ret=Return.ok("200","登录成功！");
-                ret.put("principal", authentication.getPrincipal());
+                ResponseBody responseBody=ResponseBody.ok("登录成功！");
+                Map<String,Object> data=new HashMap<String,Object>();
+                data.put("principal", authentication.getPrincipal());
+                responseBody.setData(data);
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
-                out.write(new ObjectMapper().writeValueAsString(ret));
+                out.write(JacksonUtils.toJson(responseBody));
                 out.flush();
                 out.close();
             }
@@ -125,10 +128,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 返回登录失败后数据
         loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
-                Return ret=Return.error("403","登录失败！");
+                ResponseBody responseBody=ResponseBody.error(403,"登录失败！");
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
-                out.write(new ObjectMapper().writeValueAsString(ret));
+                out.write(JacksonUtils.toJson(responseBody));
                 out.flush();
                 out.close();
             }
@@ -178,8 +181,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             response.setCharacterEncoding("utf-8");
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             PrintWriter out = response.getWriter();
-            Return ret=Return.ok("200","退出成功！");
-            out.write(new ObjectMapper().writeValueAsString(ret));
+            ResponseBody responseBody=ResponseBody.ok("退出成功！");
+            out.write(JacksonUtils.toJson(responseBody));
             out.flush();
             out.close();
         }

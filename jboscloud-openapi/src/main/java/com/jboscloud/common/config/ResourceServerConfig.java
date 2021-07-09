@@ -1,11 +1,11 @@
 package com.jboscloud.common.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.jboscloud.common.utils.JacksonUtils;
 import com.jboscloud.openapi.response.Response;
 import com.jboscloud.openapi.response.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         ResponseBody responseBody= ResponseBody.error(403,"对不起，非法请求");
                         resp.setContentType("application/json;charset=utf-8");
                         PrintWriter out = resp.getWriter();
-                        out.write(new ObjectMapper().writeValueAsString(responseBody));
+                        out.write(JacksonUtils.toJson(responseBody));
                         out.flush();
                         out.close();
                     }

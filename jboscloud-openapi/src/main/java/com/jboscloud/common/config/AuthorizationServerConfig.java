@@ -1,7 +1,8 @@
 package com.jboscloud.common.config;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.jboscloud.common.utils.JacksonUtils;
 import com.jboscloud.openapi.response.ResponseBody;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -141,7 +144,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
     @Component
     public class AuthorizationServerAuthenticationEntryPoint implements AuthenticationEntryPoint {
-        private final ObjectMapper objectMapper = new ObjectMapper();
 
         @Override
         public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
@@ -149,20 +151,37 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             ResponseBody responseBody= ResponseBody.error(401,authException.getMessage());
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();
-            out.write(objectMapper.writeValueAsString(responseBody));
+            out.write(JacksonUtils.toJson(responseBody));
             out.flush();
             out.close();
         }
     }
-//
-//    @Component
-//    @Aspect
-//    public class AuthTokenAspect {
-//        @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
-//        public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable {
-//            Object obj=null;
-//            return obj;
-//        }
-//    }
+
+    @Component
+    @Aspect
+    public class AuthorizationServerTokenAspect {
+        @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
+        public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable  {
+            try {
+                Object proceed = pjp.proceed();
+                if(proceed!=null){
+                    ResponseEntity<OAuth2AccessToken> responseEntity=(ResponseEntity<OAuth2AccessToken>)proceed;
+                    if(responseEntity.getStatusCode().is2xxSuccessful()){
+                        ResponseBody responseBody= ResponseBody.ok();
+                        responseBody.setData(responseEntity.getBody());
+                        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+                    }else{
+                        ResponseBody responseBody= ResponseBody.error("Access token failure!");
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+                    }
+                }else{
+                    ResponseBody responseBody= ResponseBody.error("Access token failure!");
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+                }
+            } catch (Exception  e) {
+                throw  e;
+            }
+        }
+    }
 }
 

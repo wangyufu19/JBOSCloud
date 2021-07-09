@@ -14,11 +14,10 @@ import lombok.Setter;
 @Getter
 public class ResponseBody extends Response{
     private Object data;
-
-    public static ResponseBody ok(int retCode,String retMsg){
+    public static ResponseBody ok(){
         ResponseBody responseBody=new ResponseBody();
-        responseBody.setRetCode(String.valueOf(retCode));
-        responseBody.setRetMsg(retMsg);
+        responseBody.setRetCode(SUCCESS_CODE);
+        responseBody.setRetMsg(SUCCESS_MESSAGE);
         return responseBody;
     }
     public static ResponseBody ok(String retMsg){
@@ -27,6 +26,13 @@ public class ResponseBody extends Response{
         responseBody.setRetMsg(retMsg);
         return responseBody;
     }
+    public static ResponseBody ok(int retCode,String retMsg){
+        ResponseBody responseBody=new ResponseBody();
+        responseBody.setRetCode(String.valueOf(retCode));
+        responseBody.setRetMsg(retMsg);
+        return responseBody;
+    }
+
     public static ResponseBody error(int errorCode,String errorMsg){
         ResponseBody responseBody=new ResponseBody();
         responseBody.setRetCode(String.valueOf(errorCode));
