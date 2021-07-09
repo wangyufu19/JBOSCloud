@@ -161,7 +161,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Aspect
     public class AuthorizationServerTokenAspect {
         @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
-        public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable  {
+        public Object handlePostAccessToken(ProceedingJoinPoint pjp) throws Throwable  {
             try {
                 Object proceed = pjp.proceed();
                 if(proceed!=null){
