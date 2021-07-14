@@ -1,11 +1,13 @@
 package com.jboscloud.openapi.filter;
 import com.jboscloud.openapi.request.OpenApiRequest;
-import com.jboscloud.openapi.request.TokenAuthRequest;
+import com.jboscloud.openapi.request.UriAuthRequest;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 /**
@@ -34,9 +36,10 @@ public class OpenApiPreFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext ctx=RequestContext.getCurrentContext();
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         try{
-            OpenApiRequest openApiRequest=new TokenAuthRequest(ctx);
-            return openApiRequest.doRequest();
+            OpenApiRequest openApiRequest=new UriAuthRequest(ctx);
+            return openApiRequest.doRequest(authentication);
         }catch (Exception e){
             log.error("Gateway Filter Exception");
             ctx.set("error.status",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

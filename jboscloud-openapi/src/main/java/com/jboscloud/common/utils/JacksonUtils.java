@@ -33,7 +33,12 @@ public class JacksonUtils {
         objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 
     }
-    public static String toJson(Object value) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(value);
+    public static String toJson(Object value) {
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

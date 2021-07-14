@@ -1,4 +1,4 @@
-package com.jboscloud.openapi;
+package com.jboscloud.openapi.response;
 /**
  * Charset
  * @author youfu.wang

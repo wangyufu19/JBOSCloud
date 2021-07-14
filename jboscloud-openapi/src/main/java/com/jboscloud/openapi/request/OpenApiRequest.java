@@ -1,4 +1,7 @@
 package com.jboscloud.openapi.request;
+
+import org.springframework.security.core.Authentication;
+
 /**
  * OpenApiProcessor
  * @author youfu.wang
@@ -6,5 +9,5 @@ package com.jboscloud.openapi.request;
  */
 public abstract class OpenApiRequest {
 
-    public abstract Object doRequest();
+    public abstract Object doRequest(Authentication authentication);
 }

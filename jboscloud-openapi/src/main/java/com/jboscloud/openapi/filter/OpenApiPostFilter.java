@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class OpenApiPostFilter extends ZuulFilter{
-    private static final Logger log= LoggerFactory.getLogger(OpenApiPostFilter.class);
+    private static final Logger logger= LoggerFactory.getLogger(OpenApiPostFilter.class);
     @Override
     public String filterType() {
         return  FilterConstants.POST_TYPE;
@@ -36,6 +36,8 @@ public class OpenApiPostFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext ctx=RequestContext.getCurrentContext();
+        HttpServletResponse response = ctx.getResponse();
+        response.setContentType("application/json;charset=utf-8");
         try{
             if(HttpServletResponse.SC_NOT_FOUND==ctx.getResponseStatusCode()){
                 ctx.setSendZuulResponse(false);
@@ -46,6 +48,7 @@ public class OpenApiPostFilter extends ZuulFilter{
                 return null;
             }
         }catch (Exception e){
+            logger.error(e.getMessage());
             ctx.set("error.status_code",HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             ctx.set("error.message",e);
         }

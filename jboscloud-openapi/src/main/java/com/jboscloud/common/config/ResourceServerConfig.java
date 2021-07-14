@@ -53,10 +53,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint(){
                     //未通过认证请求，返回异常信息
-                    public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException {
+                    public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException {
                         ResponseBody responseBody= ResponseBody.error(403,"对不起，非法请求");
-                        resp.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = resp.getWriter();
+                        res.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = res.getWriter();
                         out.write(JacksonUtils.toJson(responseBody));
                         out.flush();
                         out.close();
