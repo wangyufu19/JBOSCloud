@@ -9,5 +9,5 @@ import org.springframework.security.core.Authentication;
  */
 public abstract class OpenApiRequest {
 
-    public abstract Object doRequest(Authentication authentication);
+    public abstract Object doRequest();
 }
