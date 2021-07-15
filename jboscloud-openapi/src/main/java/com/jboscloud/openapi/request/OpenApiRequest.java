@@ -1,7 +1,4 @@
 package com.jboscloud.openapi.request;
-
-import org.springframework.security.core.Authentication;
-
 /**
  * OpenApiProcessor
  * @author youfu.wang
