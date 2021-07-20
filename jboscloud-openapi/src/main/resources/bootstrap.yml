@@ -17,6 +17,7 @@ spring:
 server:
   port: 9090
 eureka:
+  registry-fetch-interval-seconds: 10 #获取注册信息的时间间隔（s），默认为30秒
   client:
     service-url:
       defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
