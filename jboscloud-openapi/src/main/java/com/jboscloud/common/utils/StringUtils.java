@@ -104,4 +104,11 @@ public class StringUtils {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
 	}
+	public static void main(String[] args){
+		String[] arr="127.0.0.1/8".split(".*/");
+		System.out.println("========"+arr);
+		for(String s:arr){
+			System.out.println("s="+s);
+		}
+	}
 }
