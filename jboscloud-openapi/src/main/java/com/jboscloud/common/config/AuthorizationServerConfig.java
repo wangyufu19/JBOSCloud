@@ -82,10 +82,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security.addTokenEndpointAuthenticationFilter(endpointFilter);
 
     }
-    //jdbc模式的ClientDetailsService 服务配置数据源处理client相关信息的存取
     @Bean
-    public ClientDetailsService jdbcClientDetailsService(){
-        return new JdbcClientDetailsService(dataSource);
+    public ClientDetailsService jdbcClientDetailsService() {
+        JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        clientDetailsService.setPasswordEncoder(passwordEncoder);
+        return clientDetailsService;
     }
     /**
      * 颁发令牌的客户端配置：
@@ -118,13 +119,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         services.setClientDetailsService(jdbcClientDetailsService());
         services.setSupportRefreshToken(true);
         services.setTokenStore(tokenStore);
-        services.setAccessTokenValiditySeconds(7200);
-        services.setRefreshTokenValiditySeconds(259200);
-
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(jwtAccessTokenConverter));
         services.setTokenEnhancer(tokenEnhancerChain);
-
         return services;
     }
     public class AuthorizationServerEndpointFilter extends ClientCredentialsTokenEndpointFilter {
