@@ -28,7 +28,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,12 +65,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     protected void configure(HttpSecurity http) throws Exception {
-        /**
-         * 不允许跨域请求，其它请求都需要认证
-         */
         http
-                .csrf()
-                .disable()
+                .csrf().disable()  //禁用csrf
+                .sessionManagement().disable()  //禁用session
+                .formLogin().disable() //禁用form登录
                 .addFilterAfter(loginFilter(),UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .invalidateHttpSession(true)
@@ -83,15 +80,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint(){
                     //未通过认证请求，返回异常信息
-                    public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException e) throws IOException {
-                        ResponseBody responseBody=ResponseBody.error(403,"对不起，非法请求");
-                        resp.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = resp.getWriter();
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
+                        ResponseBody responseBody=ResponseBody.error("对不起，非法请求");
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        response.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = response.getWriter();
                         out.write(JacksonUtils.toJson(responseBody));
                         out.flush();
                         out.close();
                     }
-                });
+                })
+                //允许跨域
+                .and().cors();
     }
     @Bean
     @Override
@@ -117,6 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ResponseBody responseBody=ResponseBody.ok("登录成功！");
                 Map<String,Object> data=new HashMap<String,Object>();
                 data.put("principal", authentication.getPrincipal());
+                response.setStatus(HttpServletResponse.SC_OK);
                 responseBody.setData(data);
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
@@ -128,7 +129,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 返回登录失败后数据
         loginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
-                ResponseBody responseBody=ResponseBody.error(403,"登录失败！");
+                ResponseBody responseBody=ResponseBody.error("登录失败！");
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
                 out.write(JacksonUtils.toJson(responseBody));

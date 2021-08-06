@@ -26,6 +26,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -36,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 /**
  * AuthorizationServerConfig
@@ -57,10 +61,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
     @Autowired
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-    @Autowired
     private DataSource dataSource;
-
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
     /**
      * 授权服务器安全配置：
      */
@@ -72,7 +75,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
-                //.allowFormAuthenticationForClients();
         AuthorizationServerEndpointFilter endpointFilter = new AuthorizationServerEndpointFilter(security);
         endpointFilter.afterPropertiesSet();
         endpointFilter.setAuthenticationEntryPoint(new AuthorizationServerAuthenticationEntryPoint());
@@ -108,12 +110,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
          */
         endpoints
                 .authenticationManager(this.authenticationManager)
-                .tokenStore(tokenStore);
+                .tokenServices(tokenServices());
+    }
+    @Bean
+    public AuthorizationServerTokenServices tokenServices(){
+        DefaultTokenServices services = new DefaultTokenServices();
+        services.setClientDetailsService(jdbcClientDetailsService());
+        services.setSupportRefreshToken(true);
+        services.setTokenStore(tokenStore);
+        services.setAccessTokenValiditySeconds(7200);
+        services.setRefreshTokenValiditySeconds(259200);
 
-        /**
-         * 必须设置UserDetailsService才能使用refresh_token：指定使用refresh_token换取access_token时，从哪里获取认证用户信息
-         */
-        endpoints.userDetailsService(userDetailsServiceImpl);
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(jwtAccessTokenConverter));
+        services.setTokenEnhancer(tokenEnhancerChain);
+
+        return services;
     }
     public class AuthorizationServerEndpointFilter extends ClientCredentialsTokenEndpointFilter {
         private final AuthorizationServerSecurityConfigurer configurer;

@@ -11,9 +11,6 @@ spring:
 #      discovery:
 #        enabled: true
 #        service-id: configserver
-  security:
-    oauth2:
-      token-store: jdbc
 server:
   port: 9090
 eureka:
